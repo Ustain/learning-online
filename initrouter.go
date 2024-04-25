@@ -12,6 +12,6 @@ func InitRouter(r *gin.Engine) {
 	// 创建一个名为/media_api/ningmeng的路由组，用于将相关的API分组。
 	apiRouter := r.Group("/media")
 
-	apiRouter.POST("/files/", media_api.ListMediaFiles)               // 获取动态信息的API
-	apiRouter.POST("/upload/coursefile/", media_api.UploadMediaFiles) // 获取用户信息的API
+	apiRouter.POST("/files/", media_api.ListMediaFiles)               // 获取媒资数据的API
+	apiRouter.POST("/upload/coursefile/", media_api.UploadMediaFiles) // 上传媒资数据的API
 }
