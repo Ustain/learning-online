@@ -10,7 +10,7 @@ import (
 var Db *gorm.DB
 
 func InitDb() {
-	dsn := "root:123456@tcp(localhost:3307)/xcplus_media?charset=utf8mb4&parseTime=True&loc=Local" // 替换为你的数据库信息
+	dsn := "root:123456@tcp(localhost:3307)/xcplus_media?charset=utf8mb4&parseTime=True&loc=Local" // 数据库信息
 	var err error
 	Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		// 启用日志输出，输出包含SQL查询语句
