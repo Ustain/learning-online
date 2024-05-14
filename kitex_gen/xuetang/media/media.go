@@ -27,6 +27,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"getPlayUrlByMediaId": kitex.NewMethodInfo(
+		getPlayUrlByMediaIdHandler,
+		newMediaGetPlayUrlByMediaIdArgs,
+		newMediaGetPlayUrlByMediaIdResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -129,6 +136,24 @@ func newMediaUploadMediaFilesResult() interface{} {
 	return xuetang.NewMediaUploadMediaFilesResult()
 }
 
+func getPlayUrlByMediaIdHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*xuetang.MediaGetPlayUrlByMediaIdArgs)
+	realResult := result.(*xuetang.MediaGetPlayUrlByMediaIdResult)
+	success, err := handler.(xuetang.Media).GetPlayUrlByMediaId(ctx, realArg.MediaId)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMediaGetPlayUrlByMediaIdArgs() interface{} {
+	return xuetang.NewMediaGetPlayUrlByMediaIdArgs()
+}
+
+func newMediaGetPlayUrlByMediaIdResult() interface{} {
+	return xuetang.NewMediaGetPlayUrlByMediaIdResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -155,6 +180,16 @@ func (p *kClient) UploadMediaFiles(ctx context.Context, req *xuetang.UploadFileP
 	_args.FilePath = filePath
 	var _result xuetang.MediaUploadMediaFilesResult
 	if err = p.c.Call(ctx, "UploadMediaFiles", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetPlayUrlByMediaId(ctx context.Context, mediaId string) (r *xuetang.RestResponse, err error) {
+	var _args xuetang.MediaGetPlayUrlByMediaIdArgs
+	_args.MediaId = mediaId
+	var _result xuetang.MediaGetPlayUrlByMediaIdResult
+	if err = p.c.Call(ctx, "getPlayUrlByMediaId", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

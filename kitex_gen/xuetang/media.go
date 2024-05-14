@@ -2377,8 +2377,327 @@ func (p *UploadFileParamsDto) Field6DeepEqual(src string) bool {
 	return true
 }
 
+type RestResponse struct {
+	Code    int64   `thrift:"code,1,required" frugal:"1,required,i64" json:"code"`
+	Msg     string  `thrift:"msg,2,optional" frugal:"2,optional,string" json:"msg,omitempty"`
+	Result_ *string `thrift:"result,3,optional" frugal:"3,optional,string" json:"result,omitempty"`
+}
+
+func NewRestResponse() *RestResponse {
+	return &RestResponse{
+
+		Code: 0,
+		Msg:  "success",
+	}
+}
+
+func (p *RestResponse) InitDefault() {
+	*p = RestResponse{
+
+		Code: 0,
+		Msg:  "success",
+	}
+}
+
+func (p *RestResponse) GetCode() (v int64) {
+	return p.Code
+}
+
+var RestResponse_Msg_DEFAULT string = "success"
+
+func (p *RestResponse) GetMsg() (v string) {
+	if !p.IsSetMsg() {
+		return RestResponse_Msg_DEFAULT
+	}
+	return p.Msg
+}
+
+var RestResponse_Result__DEFAULT string
+
+func (p *RestResponse) GetResult_() (v string) {
+	if !p.IsSetResult_() {
+		return RestResponse_Result__DEFAULT
+	}
+	return *p.Result_
+}
+func (p *RestResponse) SetCode(val int64) {
+	p.Code = val
+}
+func (p *RestResponse) SetMsg(val string) {
+	p.Msg = val
+}
+func (p *RestResponse) SetResult_(val *string) {
+	p.Result_ = val
+}
+
+var fieldIDToName_RestResponse = map[int16]string{
+	1: "code",
+	2: "msg",
+	3: "result",
+}
+
+func (p *RestResponse) IsSetMsg() bool {
+	return p.Msg != RestResponse_Msg_DEFAULT
+}
+
+func (p *RestResponse) IsSetResult_() bool {
+	return p.Result_ != nil
+}
+
+func (p *RestResponse) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+	var issetCode bool = false
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetCode = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	if !issetCode {
+		fieldId = 1
+		goto RequiredFieldNotSetError
+	}
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_RestResponse[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+RequiredFieldNotSetError:
+	return thrift.NewTProtocolExceptionWithType(thrift.INVALID_DATA, fmt.Errorf("required field %s is not set", fieldIDToName_RestResponse[fieldId]))
+}
+
+func (p *RestResponse) ReadField1(iprot thrift.TProtocol) error {
+
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		p.Code = v
+	}
+	return nil
+}
+func (p *RestResponse) ReadField2(iprot thrift.TProtocol) error {
+
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		p.Msg = v
+	}
+	return nil
+}
+func (p *RestResponse) ReadField3(iprot thrift.TProtocol) error {
+
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		p.Result_ = &v
+	}
+	return nil
+}
+
+func (p *RestResponse) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("RestResponse"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
+			goto WriteFieldError
+		}
+		if err = p.writeField3(oprot); err != nil {
+			fieldId = 3
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *RestResponse) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("code", thrift.I64, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI64(p.Code); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *RestResponse) writeField2(oprot thrift.TProtocol) (err error) {
+	if p.IsSetMsg() {
+		if err = oprot.WriteFieldBegin("msg", thrift.STRING, 2); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.Msg); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *RestResponse) writeField3(oprot thrift.TProtocol) (err error) {
+	if p.IsSetResult_() {
+		if err = oprot.WriteFieldBegin("result", thrift.STRING, 3); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(*p.Result_); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+
+func (p *RestResponse) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("RestResponse(%+v)", *p)
+
+}
+
+func (p *RestResponse) DeepEqual(ano *RestResponse) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.Code) {
+		return false
+	}
+	if !p.Field2DeepEqual(ano.Msg) {
+		return false
+	}
+	if !p.Field3DeepEqual(ano.Result_) {
+		return false
+	}
+	return true
+}
+
+func (p *RestResponse) Field1DeepEqual(src int64) bool {
+
+	if p.Code != src {
+		return false
+	}
+	return true
+}
+func (p *RestResponse) Field2DeepEqual(src string) bool {
+
+	if strings.Compare(p.Msg, src) != 0 {
+		return false
+	}
+	return true
+}
+func (p *RestResponse) Field3DeepEqual(src *string) bool {
+
+	if p.Result_ == src {
+		return true
+	} else if p.Result_ == nil || src == nil {
+		return false
+	}
+	if strings.Compare(*p.Result_, *src) != 0 {
+		return false
+	}
+	return true
+}
+
 type UploadFileResultDto struct {
-	MediaFiles *MediaFiles `thrift:"mediaFiles,1" frugal:"1,default,MediaFiles" json:"mediaFiles"`
+	MediaFiles *MediaFiles `thrift:"mediaFiles,1,required" frugal:"1,required,MediaFiles" json:"mediaFiles"`
 }
 
 func NewUploadFileResultDto() *UploadFileResultDto {
@@ -2413,6 +2732,7 @@ func (p *UploadFileResultDto) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
+	var issetMediaFiles bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -2433,6 +2753,7 @@ func (p *UploadFileResultDto) Read(iprot thrift.TProtocol) (err error) {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
+				issetMediaFiles = true
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
@@ -2449,6 +2770,10 @@ func (p *UploadFileResultDto) Read(iprot thrift.TProtocol) (err error) {
 		goto ReadStructEndError
 	}
 
+	if !issetMediaFiles {
+		fieldId = 1
+		goto RequiredFieldNotSetError
+	}
 	return nil
 ReadStructBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
@@ -2463,6 +2788,8 @@ ReadFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
 ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+RequiredFieldNotSetError:
+	return thrift.NewTProtocolExceptionWithType(thrift.INVALID_DATA, fmt.Errorf("required field %s is not set", fieldIDToName_UploadFileResultDto[fieldId]))
 }
 
 func (p *UploadFileResultDto) ReadField1(iprot thrift.TProtocol) error {
@@ -2546,10 +2873,246 @@ func (p *UploadFileResultDto) Field1DeepEqual(src *MediaFiles) bool {
 	return true
 }
 
+type UploadProcessResult_ struct {
+	Filepath string  `thrift:"filepath,1,required" frugal:"1,required,string" json:"filepath"`
+	Process  float64 `thrift:"process,2,required" frugal:"2,required,double" json:"process"`
+}
+
+func NewUploadProcessResult_() *UploadProcessResult_ {
+	return &UploadProcessResult_{}
+}
+
+func (p *UploadProcessResult_) InitDefault() {
+	*p = UploadProcessResult_{}
+}
+
+func (p *UploadProcessResult_) GetFilepath() (v string) {
+	return p.Filepath
+}
+
+func (p *UploadProcessResult_) GetProcess() (v float64) {
+	return p.Process
+}
+func (p *UploadProcessResult_) SetFilepath(val string) {
+	p.Filepath = val
+}
+func (p *UploadProcessResult_) SetProcess(val float64) {
+	p.Process = val
+}
+
+var fieldIDToName_UploadProcessResult_ = map[int16]string{
+	1: "filepath",
+	2: "process",
+}
+
+func (p *UploadProcessResult_) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+	var issetFilepath bool = false
+	var issetProcess bool = false
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetFilepath = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.DOUBLE {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+				issetProcess = true
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	if !issetFilepath {
+		fieldId = 1
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetProcess {
+		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UploadProcessResult_[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+RequiredFieldNotSetError:
+	return thrift.NewTProtocolExceptionWithType(thrift.INVALID_DATA, fmt.Errorf("required field %s is not set", fieldIDToName_UploadProcessResult_[fieldId]))
+}
+
+func (p *UploadProcessResult_) ReadField1(iprot thrift.TProtocol) error {
+
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		p.Filepath = v
+	}
+	return nil
+}
+func (p *UploadProcessResult_) ReadField2(iprot thrift.TProtocol) error {
+
+	if v, err := iprot.ReadDouble(); err != nil {
+		return err
+	} else {
+		p.Process = v
+	}
+	return nil
+}
+
+func (p *UploadProcessResult_) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("UploadProcessResult"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *UploadProcessResult_) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("filepath", thrift.STRING, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Filepath); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *UploadProcessResult_) writeField2(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("process", thrift.DOUBLE, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteDouble(p.Process); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *UploadProcessResult_) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UploadProcessResult_(%+v)", *p)
+
+}
+
+func (p *UploadProcessResult_) DeepEqual(ano *UploadProcessResult_) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.Filepath) {
+		return false
+	}
+	if !p.Field2DeepEqual(ano.Process) {
+		return false
+	}
+	return true
+}
+
+func (p *UploadProcessResult_) Field1DeepEqual(src string) bool {
+
+	if strings.Compare(p.Filepath, src) != 0 {
+		return false
+	}
+	return true
+}
+func (p *UploadProcessResult_) Field2DeepEqual(src float64) bool {
+
+	if p.Process != src {
+		return false
+	}
+	return true
+}
+
 type Media interface {
 	QueryMediaFiles(ctx context.Context, req *PageParams) (r *PageResult_, err error)
 
 	UploadMediaFiles(ctx context.Context, req *UploadFileParamsDto, filePath string) (r *UploadFileResultDto, err error)
+
+	GetPlayUrlByMediaId(ctx context.Context, mediaId string) (r *RestResponse, err error)
 }
 
 type MediaClient struct {
@@ -2597,6 +3160,79 @@ func (p *MediaClient) UploadMediaFiles(ctx context.Context, req *UploadFileParam
 	}
 	return _result.GetSuccess(), nil
 }
+func (p *MediaClient) GetPlayUrlByMediaId(ctx context.Context, mediaId string) (r *RestResponse, err error) {
+	var _args MediaGetPlayUrlByMediaIdArgs
+	_args.MediaId = mediaId
+	var _result MediaGetPlayUrlByMediaIdResult
+	if err = p.Client_().Call(ctx, "getPlayUrlByMediaId", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+type BigFile interface {
+	Checkfile(ctx context.Context, fileMd5 string) (r *RestResponse, err error)
+
+	UploadBigFile(ctx context.Context, req *UploadFileParamsDto, filePath string) (r *UploadFileResultDto, err error)
+
+	GetUploadProcess(ctx context.Context, filepath string, fileSize float64) (r *UploadProcessResult_, err error)
+}
+
+type BigFileClient struct {
+	c thrift.TClient
+}
+
+func NewBigFileClientFactory(t thrift.TTransport, f thrift.TProtocolFactory) *BigFileClient {
+	return &BigFileClient{
+		c: thrift.NewTStandardClient(f.GetProtocol(t), f.GetProtocol(t)),
+	}
+}
+
+func NewBigFileClientProtocol(t thrift.TTransport, iprot thrift.TProtocol, oprot thrift.TProtocol) *BigFileClient {
+	return &BigFileClient{
+		c: thrift.NewTStandardClient(iprot, oprot),
+	}
+}
+
+func NewBigFileClient(c thrift.TClient) *BigFileClient {
+	return &BigFileClient{
+		c: c,
+	}
+}
+
+func (p *BigFileClient) Client_() thrift.TClient {
+	return p.c
+}
+
+func (p *BigFileClient) Checkfile(ctx context.Context, fileMd5 string) (r *RestResponse, err error) {
+	var _args BigFileCheckfileArgs
+	_args.FileMd5 = fileMd5
+	var _result BigFileCheckfileResult
+	if err = p.Client_().Call(ctx, "checkfile", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+func (p *BigFileClient) UploadBigFile(ctx context.Context, req *UploadFileParamsDto, filePath string) (r *UploadFileResultDto, err error) {
+	var _args BigFileUploadBigFileArgs
+	_args.Req = req
+	_args.FilePath = filePath
+	var _result BigFileUploadBigFileResult
+	if err = p.Client_().Call(ctx, "UploadBigFile", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+func (p *BigFileClient) GetUploadProcess(ctx context.Context, filepath string, fileSize float64) (r *UploadProcessResult_, err error) {
+	var _args BigFileGetUploadProcessArgs
+	_args.Filepath = filepath
+	_args.FileSize = fileSize
+	var _result BigFileGetUploadProcessResult
+	if err = p.Client_().Call(ctx, "GetUploadProcess", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
 
 type MediaProcessor struct {
 	processorMap map[string]thrift.TProcessorFunction
@@ -2620,6 +3256,7 @@ func NewMediaProcessor(handler Media) *MediaProcessor {
 	self := &MediaProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
 	self.AddToProcessorMap("QueryMediaFiles", &mediaProcessorQueryMediaFiles{handler: handler})
 	self.AddToProcessorMap("UploadMediaFiles", &mediaProcessorUploadMediaFiles{handler: handler})
+	self.AddToProcessorMap("getPlayUrlByMediaId", &mediaProcessorGetPlayUrlByMediaId{handler: handler})
 	return self
 }
 func (p *MediaProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -2719,6 +3356,54 @@ func (p *mediaProcessorUploadMediaFiles) Process(ctx context.Context, seqId int3
 		result.Success = retval
 	}
 	if err2 = oprot.WriteMessageBegin("UploadMediaFiles", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type mediaProcessorGetPlayUrlByMediaId struct {
+	handler Media
+}
+
+func (p *mediaProcessorGetPlayUrlByMediaId) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := MediaGetPlayUrlByMediaIdArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("getPlayUrlByMediaId", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := MediaGetPlayUrlByMediaIdResult{}
+	var retval *RestResponse
+	if retval, err2 = p.handler.GetPlayUrlByMediaId(ctx, args.MediaId); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing getPlayUrlByMediaId: "+err2.Error())
+		oprot.WriteMessageBegin("getPlayUrlByMediaId", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("getPlayUrlByMediaId", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -3466,6 +4151,1646 @@ func (p *MediaUploadMediaFilesResult) DeepEqual(ano *MediaUploadMediaFilesResult
 }
 
 func (p *MediaUploadMediaFilesResult) Field0DeepEqual(src *UploadFileResultDto) bool {
+
+	if !p.Success.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type MediaGetPlayUrlByMediaIdArgs struct {
+	MediaId string `thrift:"mediaId,1" frugal:"1,default,string" json:"mediaId"`
+}
+
+func NewMediaGetPlayUrlByMediaIdArgs() *MediaGetPlayUrlByMediaIdArgs {
+	return &MediaGetPlayUrlByMediaIdArgs{}
+}
+
+func (p *MediaGetPlayUrlByMediaIdArgs) InitDefault() {
+	*p = MediaGetPlayUrlByMediaIdArgs{}
+}
+
+func (p *MediaGetPlayUrlByMediaIdArgs) GetMediaId() (v string) {
+	return p.MediaId
+}
+func (p *MediaGetPlayUrlByMediaIdArgs) SetMediaId(val string) {
+	p.MediaId = val
+}
+
+var fieldIDToName_MediaGetPlayUrlByMediaIdArgs = map[int16]string{
+	1: "mediaId",
+}
+
+func (p *MediaGetPlayUrlByMediaIdArgs) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MediaGetPlayUrlByMediaIdArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *MediaGetPlayUrlByMediaIdArgs) ReadField1(iprot thrift.TProtocol) error {
+
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		p.MediaId = v
+	}
+	return nil
+}
+
+func (p *MediaGetPlayUrlByMediaIdArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("getPlayUrlByMediaId_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *MediaGetPlayUrlByMediaIdArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("mediaId", thrift.STRING, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.MediaId); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *MediaGetPlayUrlByMediaIdArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MediaGetPlayUrlByMediaIdArgs(%+v)", *p)
+
+}
+
+func (p *MediaGetPlayUrlByMediaIdArgs) DeepEqual(ano *MediaGetPlayUrlByMediaIdArgs) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.MediaId) {
+		return false
+	}
+	return true
+}
+
+func (p *MediaGetPlayUrlByMediaIdArgs) Field1DeepEqual(src string) bool {
+
+	if strings.Compare(p.MediaId, src) != 0 {
+		return false
+	}
+	return true
+}
+
+type MediaGetPlayUrlByMediaIdResult struct {
+	Success *RestResponse `thrift:"success,0,optional" frugal:"0,optional,RestResponse" json:"success,omitempty"`
+}
+
+func NewMediaGetPlayUrlByMediaIdResult() *MediaGetPlayUrlByMediaIdResult {
+	return &MediaGetPlayUrlByMediaIdResult{}
+}
+
+func (p *MediaGetPlayUrlByMediaIdResult) InitDefault() {
+	*p = MediaGetPlayUrlByMediaIdResult{}
+}
+
+var MediaGetPlayUrlByMediaIdResult_Success_DEFAULT *RestResponse
+
+func (p *MediaGetPlayUrlByMediaIdResult) GetSuccess() (v *RestResponse) {
+	if !p.IsSetSuccess() {
+		return MediaGetPlayUrlByMediaIdResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MediaGetPlayUrlByMediaIdResult) SetSuccess(x interface{}) {
+	p.Success = x.(*RestResponse)
+}
+
+var fieldIDToName_MediaGetPlayUrlByMediaIdResult = map[int16]string{
+	0: "success",
+}
+
+func (p *MediaGetPlayUrlByMediaIdResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MediaGetPlayUrlByMediaIdResult) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MediaGetPlayUrlByMediaIdResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *MediaGetPlayUrlByMediaIdResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = NewRestResponse()
+	if err := p.Success.Read(iprot); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (p *MediaGetPlayUrlByMediaIdResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("getPlayUrlByMediaId_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *MediaGetPlayUrlByMediaIdResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *MediaGetPlayUrlByMediaIdResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MediaGetPlayUrlByMediaIdResult(%+v)", *p)
+
+}
+
+func (p *MediaGetPlayUrlByMediaIdResult) DeepEqual(ano *MediaGetPlayUrlByMediaIdResult) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field0DeepEqual(ano.Success) {
+		return false
+	}
+	return true
+}
+
+func (p *MediaGetPlayUrlByMediaIdResult) Field0DeepEqual(src *RestResponse) bool {
+
+	if !p.Success.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type BigFileProcessor struct {
+	processorMap map[string]thrift.TProcessorFunction
+	handler      BigFile
+}
+
+func (p *BigFileProcessor) AddToProcessorMap(key string, processor thrift.TProcessorFunction) {
+	p.processorMap[key] = processor
+}
+
+func (p *BigFileProcessor) GetProcessorFunction(key string) (processor thrift.TProcessorFunction, ok bool) {
+	processor, ok = p.processorMap[key]
+	return processor, ok
+}
+
+func (p *BigFileProcessor) ProcessorMap() map[string]thrift.TProcessorFunction {
+	return p.processorMap
+}
+
+func NewBigFileProcessor(handler BigFile) *BigFileProcessor {
+	self := &BigFileProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self.AddToProcessorMap("checkfile", &bigFileProcessorCheckfile{handler: handler})
+	self.AddToProcessorMap("UploadBigFile", &bigFileProcessorUploadBigFile{handler: handler})
+	self.AddToProcessorMap("GetUploadProcess", &bigFileProcessorGetUploadProcess{handler: handler})
+	return self
+}
+func (p *BigFileProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	name, _, seqId, err := iprot.ReadMessageBegin()
+	if err != nil {
+		return false, err
+	}
+	if processor, ok := p.GetProcessorFunction(name); ok {
+		return processor.Process(ctx, seqId, iprot, oprot)
+	}
+	iprot.Skip(thrift.STRUCT)
+	iprot.ReadMessageEnd()
+	x := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
+	x.Write(oprot)
+	oprot.WriteMessageEnd()
+	oprot.Flush(ctx)
+	return false, x
+}
+
+type bigFileProcessorCheckfile struct {
+	handler BigFile
+}
+
+func (p *bigFileProcessorCheckfile) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := BigFileCheckfileArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("checkfile", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := BigFileCheckfileResult{}
+	var retval *RestResponse
+	if retval, err2 = p.handler.Checkfile(ctx, args.FileMd5); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing checkfile: "+err2.Error())
+		oprot.WriteMessageBegin("checkfile", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("checkfile", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type bigFileProcessorUploadBigFile struct {
+	handler BigFile
+}
+
+func (p *bigFileProcessorUploadBigFile) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := BigFileUploadBigFileArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("UploadBigFile", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := BigFileUploadBigFileResult{}
+	var retval *UploadFileResultDto
+	if retval, err2 = p.handler.UploadBigFile(ctx, args.Req, args.FilePath); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing UploadBigFile: "+err2.Error())
+		oprot.WriteMessageBegin("UploadBigFile", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("UploadBigFile", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type bigFileProcessorGetUploadProcess struct {
+	handler BigFile
+}
+
+func (p *bigFileProcessorGetUploadProcess) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := BigFileGetUploadProcessArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("GetUploadProcess", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := BigFileGetUploadProcessResult{}
+	var retval *UploadProcessResult_
+	if retval, err2 = p.handler.GetUploadProcess(ctx, args.Filepath, args.FileSize); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing GetUploadProcess: "+err2.Error())
+		oprot.WriteMessageBegin("GetUploadProcess", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("GetUploadProcess", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
+}
+
+type BigFileCheckfileArgs struct {
+	FileMd5 string `thrift:"fileMd5,1" frugal:"1,default,string" json:"fileMd5"`
+}
+
+func NewBigFileCheckfileArgs() *BigFileCheckfileArgs {
+	return &BigFileCheckfileArgs{}
+}
+
+func (p *BigFileCheckfileArgs) InitDefault() {
+	*p = BigFileCheckfileArgs{}
+}
+
+func (p *BigFileCheckfileArgs) GetFileMd5() (v string) {
+	return p.FileMd5
+}
+func (p *BigFileCheckfileArgs) SetFileMd5(val string) {
+	p.FileMd5 = val
+}
+
+var fieldIDToName_BigFileCheckfileArgs = map[int16]string{
+	1: "fileMd5",
+}
+
+func (p *BigFileCheckfileArgs) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BigFileCheckfileArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *BigFileCheckfileArgs) ReadField1(iprot thrift.TProtocol) error {
+
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		p.FileMd5 = v
+	}
+	return nil
+}
+
+func (p *BigFileCheckfileArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("checkfile_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *BigFileCheckfileArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("fileMd5", thrift.STRING, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.FileMd5); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *BigFileCheckfileArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BigFileCheckfileArgs(%+v)", *p)
+
+}
+
+func (p *BigFileCheckfileArgs) DeepEqual(ano *BigFileCheckfileArgs) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.FileMd5) {
+		return false
+	}
+	return true
+}
+
+func (p *BigFileCheckfileArgs) Field1DeepEqual(src string) bool {
+
+	if strings.Compare(p.FileMd5, src) != 0 {
+		return false
+	}
+	return true
+}
+
+type BigFileCheckfileResult struct {
+	Success *RestResponse `thrift:"success,0,optional" frugal:"0,optional,RestResponse" json:"success,omitempty"`
+}
+
+func NewBigFileCheckfileResult() *BigFileCheckfileResult {
+	return &BigFileCheckfileResult{}
+}
+
+func (p *BigFileCheckfileResult) InitDefault() {
+	*p = BigFileCheckfileResult{}
+}
+
+var BigFileCheckfileResult_Success_DEFAULT *RestResponse
+
+func (p *BigFileCheckfileResult) GetSuccess() (v *RestResponse) {
+	if !p.IsSetSuccess() {
+		return BigFileCheckfileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *BigFileCheckfileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*RestResponse)
+}
+
+var fieldIDToName_BigFileCheckfileResult = map[int16]string{
+	0: "success",
+}
+
+func (p *BigFileCheckfileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *BigFileCheckfileResult) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BigFileCheckfileResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *BigFileCheckfileResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = NewRestResponse()
+	if err := p.Success.Read(iprot); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (p *BigFileCheckfileResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("checkfile_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *BigFileCheckfileResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *BigFileCheckfileResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BigFileCheckfileResult(%+v)", *p)
+
+}
+
+func (p *BigFileCheckfileResult) DeepEqual(ano *BigFileCheckfileResult) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field0DeepEqual(ano.Success) {
+		return false
+	}
+	return true
+}
+
+func (p *BigFileCheckfileResult) Field0DeepEqual(src *RestResponse) bool {
+
+	if !p.Success.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type BigFileUploadBigFileArgs struct {
+	Req      *UploadFileParamsDto `thrift:"req,1" frugal:"1,default,UploadFileParamsDto" json:"req"`
+	FilePath string               `thrift:"filePath,2" frugal:"2,default,string" json:"filePath"`
+}
+
+func NewBigFileUploadBigFileArgs() *BigFileUploadBigFileArgs {
+	return &BigFileUploadBigFileArgs{}
+}
+
+func (p *BigFileUploadBigFileArgs) InitDefault() {
+	*p = BigFileUploadBigFileArgs{}
+}
+
+var BigFileUploadBigFileArgs_Req_DEFAULT *UploadFileParamsDto
+
+func (p *BigFileUploadBigFileArgs) GetReq() (v *UploadFileParamsDto) {
+	if !p.IsSetReq() {
+		return BigFileUploadBigFileArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+
+func (p *BigFileUploadBigFileArgs) GetFilePath() (v string) {
+	return p.FilePath
+}
+func (p *BigFileUploadBigFileArgs) SetReq(val *UploadFileParamsDto) {
+	p.Req = val
+}
+func (p *BigFileUploadBigFileArgs) SetFilePath(val string) {
+	p.FilePath = val
+}
+
+var fieldIDToName_BigFileUploadBigFileArgs = map[int16]string{
+	1: "req",
+	2: "filePath",
+}
+
+func (p *BigFileUploadBigFileArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *BigFileUploadBigFileArgs) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BigFileUploadBigFileArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *BigFileUploadBigFileArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Req = NewUploadFileParamsDto()
+	if err := p.Req.Read(iprot); err != nil {
+		return err
+	}
+	return nil
+}
+func (p *BigFileUploadBigFileArgs) ReadField2(iprot thrift.TProtocol) error {
+
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		p.FilePath = v
+	}
+	return nil
+}
+
+func (p *BigFileUploadBigFileArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("UploadBigFile_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *BigFileUploadBigFileArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Req.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *BigFileUploadBigFileArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("filePath", thrift.STRING, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.FilePath); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *BigFileUploadBigFileArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BigFileUploadBigFileArgs(%+v)", *p)
+
+}
+
+func (p *BigFileUploadBigFileArgs) DeepEqual(ano *BigFileUploadBigFileArgs) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.Req) {
+		return false
+	}
+	if !p.Field2DeepEqual(ano.FilePath) {
+		return false
+	}
+	return true
+}
+
+func (p *BigFileUploadBigFileArgs) Field1DeepEqual(src *UploadFileParamsDto) bool {
+
+	if !p.Req.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+func (p *BigFileUploadBigFileArgs) Field2DeepEqual(src string) bool {
+
+	if strings.Compare(p.FilePath, src) != 0 {
+		return false
+	}
+	return true
+}
+
+type BigFileUploadBigFileResult struct {
+	Success *UploadFileResultDto `thrift:"success,0,optional" frugal:"0,optional,UploadFileResultDto" json:"success,omitempty"`
+}
+
+func NewBigFileUploadBigFileResult() *BigFileUploadBigFileResult {
+	return &BigFileUploadBigFileResult{}
+}
+
+func (p *BigFileUploadBigFileResult) InitDefault() {
+	*p = BigFileUploadBigFileResult{}
+}
+
+var BigFileUploadBigFileResult_Success_DEFAULT *UploadFileResultDto
+
+func (p *BigFileUploadBigFileResult) GetSuccess() (v *UploadFileResultDto) {
+	if !p.IsSetSuccess() {
+		return BigFileUploadBigFileResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *BigFileUploadBigFileResult) SetSuccess(x interface{}) {
+	p.Success = x.(*UploadFileResultDto)
+}
+
+var fieldIDToName_BigFileUploadBigFileResult = map[int16]string{
+	0: "success",
+}
+
+func (p *BigFileUploadBigFileResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *BigFileUploadBigFileResult) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BigFileUploadBigFileResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *BigFileUploadBigFileResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = NewUploadFileResultDto()
+	if err := p.Success.Read(iprot); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (p *BigFileUploadBigFileResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("UploadBigFile_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *BigFileUploadBigFileResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *BigFileUploadBigFileResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BigFileUploadBigFileResult(%+v)", *p)
+
+}
+
+func (p *BigFileUploadBigFileResult) DeepEqual(ano *BigFileUploadBigFileResult) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field0DeepEqual(ano.Success) {
+		return false
+	}
+	return true
+}
+
+func (p *BigFileUploadBigFileResult) Field0DeepEqual(src *UploadFileResultDto) bool {
+
+	if !p.Success.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type BigFileGetUploadProcessArgs struct {
+	Filepath string  `thrift:"filepath,1" frugal:"1,default,string" json:"filepath"`
+	FileSize float64 `thrift:"fileSize,2" frugal:"2,default,double" json:"fileSize"`
+}
+
+func NewBigFileGetUploadProcessArgs() *BigFileGetUploadProcessArgs {
+	return &BigFileGetUploadProcessArgs{}
+}
+
+func (p *BigFileGetUploadProcessArgs) InitDefault() {
+	*p = BigFileGetUploadProcessArgs{}
+}
+
+func (p *BigFileGetUploadProcessArgs) GetFilepath() (v string) {
+	return p.Filepath
+}
+
+func (p *BigFileGetUploadProcessArgs) GetFileSize() (v float64) {
+	return p.FileSize
+}
+func (p *BigFileGetUploadProcessArgs) SetFilepath(val string) {
+	p.Filepath = val
+}
+func (p *BigFileGetUploadProcessArgs) SetFileSize(val float64) {
+	p.FileSize = val
+}
+
+var fieldIDToName_BigFileGetUploadProcessArgs = map[int16]string{
+	1: "filepath",
+	2: "fileSize",
+}
+
+func (p *BigFileGetUploadProcessArgs) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.DOUBLE {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BigFileGetUploadProcessArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *BigFileGetUploadProcessArgs) ReadField1(iprot thrift.TProtocol) error {
+
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		p.Filepath = v
+	}
+	return nil
+}
+func (p *BigFileGetUploadProcessArgs) ReadField2(iprot thrift.TProtocol) error {
+
+	if v, err := iprot.ReadDouble(); err != nil {
+		return err
+	} else {
+		p.FileSize = v
+	}
+	return nil
+}
+
+func (p *BigFileGetUploadProcessArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("GetUploadProcess_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *BigFileGetUploadProcessArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("filepath", thrift.STRING, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Filepath); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *BigFileGetUploadProcessArgs) writeField2(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("fileSize", thrift.DOUBLE, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteDouble(p.FileSize); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *BigFileGetUploadProcessArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BigFileGetUploadProcessArgs(%+v)", *p)
+
+}
+
+func (p *BigFileGetUploadProcessArgs) DeepEqual(ano *BigFileGetUploadProcessArgs) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.Filepath) {
+		return false
+	}
+	if !p.Field2DeepEqual(ano.FileSize) {
+		return false
+	}
+	return true
+}
+
+func (p *BigFileGetUploadProcessArgs) Field1DeepEqual(src string) bool {
+
+	if strings.Compare(p.Filepath, src) != 0 {
+		return false
+	}
+	return true
+}
+func (p *BigFileGetUploadProcessArgs) Field2DeepEqual(src float64) bool {
+
+	if p.FileSize != src {
+		return false
+	}
+	return true
+}
+
+type BigFileGetUploadProcessResult struct {
+	Success *UploadProcessResult_ `thrift:"success,0,optional" frugal:"0,optional,UploadProcessResult_" json:"success,omitempty"`
+}
+
+func NewBigFileGetUploadProcessResult() *BigFileGetUploadProcessResult {
+	return &BigFileGetUploadProcessResult{}
+}
+
+func (p *BigFileGetUploadProcessResult) InitDefault() {
+	*p = BigFileGetUploadProcessResult{}
+}
+
+var BigFileGetUploadProcessResult_Success_DEFAULT *UploadProcessResult_
+
+func (p *BigFileGetUploadProcessResult) GetSuccess() (v *UploadProcessResult_) {
+	if !p.IsSetSuccess() {
+		return BigFileGetUploadProcessResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *BigFileGetUploadProcessResult) SetSuccess(x interface{}) {
+	p.Success = x.(*UploadProcessResult_)
+}
+
+var fieldIDToName_BigFileGetUploadProcessResult = map[int16]string{
+	0: "success",
+}
+
+func (p *BigFileGetUploadProcessResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *BigFileGetUploadProcessResult) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BigFileGetUploadProcessResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *BigFileGetUploadProcessResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = NewUploadProcessResult_()
+	if err := p.Success.Read(iprot); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (p *BigFileGetUploadProcessResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("GetUploadProcess_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *BigFileGetUploadProcessResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *BigFileGetUploadProcessResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("BigFileGetUploadProcessResult(%+v)", *p)
+
+}
+
+func (p *BigFileGetUploadProcessResult) DeepEqual(ano *BigFileGetUploadProcessResult) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field0DeepEqual(ano.Success) {
+		return false
+	}
+	return true
+}
+
+func (p *BigFileGetUploadProcessResult) Field0DeepEqual(src *UploadProcessResult_) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false

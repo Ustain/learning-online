@@ -10,6 +10,6 @@ func InitRd() {
 	Rd = redis.NewClient(&redis.Options{
 		Addr:     "127.0.0.1:6379", // url
 		Password: "",
-		DB:       0, // 0号数据库
+		DB:       1, // 1号数据库
 	})
 }

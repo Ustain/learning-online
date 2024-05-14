@@ -4,7 +4,9 @@ import (
 	"context"
 	"crypto/md5"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
+	"github.com/go-redis/redis"
 	"github.com/qiniu/go-sdk/v7/storage"
 	"io"
 	"os"
@@ -13,24 +15,73 @@ import (
 	"xuetang/kitex_gen/xuetang"
 )
 
+// QueryMediaFiles 分页查询媒资文件
 func QueryMediaFiles(companyId int, pageParams xuetang.PageParams) (xuetang.PageResult_, error) {
 	var mediaFiles []*xuetang.MediaFiles
 	var total int64
 
-	// 构建查询条件
-	result := init_config.Db.Where("company_id = ?", companyId).Find(&mediaFiles)
-	if result.Error != nil {
-		return xuetang.PageResult_{}, nil
-	}
-	// 获取总记录数
-	if err := result.Model(&xuetang.MediaFiles{}).Count(&total).Error; err != nil {
+	// 构建Redis键名
+	keyp := "media_files:*"
+
+	// 从Redis中获取缓存数据
+	keys, err := init_config.Rd.Keys(keyp).Result()
+	if err != nil {
+		fmt.Println("redis错误", err)
 		return xuetang.PageResult_{}, err
 	}
 
-	// 分页查询
-	if err := result.Offset(int((pageParams.PageNo - 1) * pageParams.PageSize)).Limit(int(pageParams.PageSize)).Find(&mediaFiles).Error; err != nil {
-		return xuetang.PageResult_{}, err
+	// 获取总记录数
+	total = int64(len(keys))
+
+	// 解码JSON数据
+	for i, key := range keys {
+		if i < int(pageParams.PageSize) {
+			// 从Redis中获取对应键的值
+			value, err := init_config.Rd.Get(key).Result()
+			if err != nil {
+				fmt.Printf("获取键值失败：%s\n", err)
+				return xuetang.PageResult_{}, err
+			}
+
+			// 解码JSON
+			var mf xuetang.MediaFiles
+			err = json.Unmarshal([]byte(value), &mf)
+			if err != nil {
+				fmt.Printf("解码JSON失败：%s\n", err)
+				return xuetang.PageResult_{}, err
+			}
+
+			// 将解码后的数据添加到mediaFiles数组中
+			mediaFiles = append(mediaFiles, &mf)
+		}
 	}
+
+	//数据不够再查数据库
+	if len(mediaFiles) < int(pageParams.PageSize) {
+		fmt.Println("查数据库了！！")
+		// 构建查询条件
+		result := init_config.Db.Where("company_id = ?", companyId).Find(&mediaFiles)
+		if result.Error != nil {
+			return xuetang.PageResult_{}, nil
+		}
+		// 获取总记录数
+		if err := result.Model(&xuetang.MediaFiles{}).Count(&total).Error; err != nil {
+			return xuetang.PageResult_{}, err
+		}
+
+		// 分页查询
+		if err := result.Offset(int((pageParams.PageNo - 1) * pageParams.PageSize)).Limit(int(pageParams.PageSize)).Find(&mediaFiles).Error; err != nil {
+			return xuetang.PageResult_{}, err
+		}
+	}
+
+	// 分页处理
+	startIndex := (pageParams.PageNo - 1) * pageParams.PageSize
+	endIndex := startIndex + pageParams.PageSize
+	if endIndex > total {
+		endIndex = total
+	}
+	mediaFiles = mediaFiles[startIndex:endIndex]
 
 	var pageResult *xuetang.PageResult_
 	// 构建分页结果
@@ -41,7 +92,6 @@ func QueryMediaFiles(companyId int, pageParams xuetang.PageParams) (xuetang.Page
 	pageResult.SetPageSize(pageParams.PageSize)
 
 	return *pageResult, nil
-
 }
 
 // 存储媒资数据到数据库
@@ -104,6 +154,7 @@ func getFileMd5(file os.File) (md5Str string, err error) {
 	return md5Str, nil
 }
 
+// UploadMedia 上传媒资文件到对象存储
 func UploadMedia(companyId int, uploadFileParam xuetang.UploadFileParamsDto, filePath string) (xuetang.UploadFileResultDto, error) {
 	//文件名
 	filename := uploadFileParam.Filename
@@ -146,4 +197,42 @@ func UploadMedia(companyId int, uploadFileParam xuetang.UploadFileParamsDto, fil
 	uploadFileResult := xuetang.NewUploadFileResultDto()
 	uploadFileResult.MediaFiles = &mediaFile
 	return *uploadFileResult, nil
+}
+
+func GetPlayUrlById(mediaId string) (xuetang.MediaFiles, error) {
+	mediaFiles := xuetang.NewMediaFiles()
+	key := "media_files:" + mediaId
+	mediaFilesJson, err := init_config.Rd.Get(key).Result()
+	if err != nil {
+		if err == redis.Nil {
+			// Redis中不存在数据，查数据库
+			fmt.Println("查数据库了！！")
+			if err := init_config.Db.Where("id = ?", mediaId).First(&mediaFiles).Error; err != nil {
+				return xuetang.MediaFiles{}, err
+			}
+
+			// 将数据写入Redis
+			mediaFileJSON, err := json.Marshal(mediaFiles)
+			if err != nil {
+				return xuetang.MediaFiles{}, err
+			}
+
+			// 使用 SET 命令将媒资文件数据存储到 Redis 中
+			err = init_config.Rd.Set("media_files:"+mediaFiles.Id, mediaFileJSON, 0).Err()
+			if err != nil {
+				return xuetang.MediaFiles{}, err
+			}
+			return *mediaFiles, nil
+		} else {
+			// Redis出错
+			return xuetang.MediaFiles{}, err
+		}
+	}
+
+	err = json.Unmarshal([]byte(mediaFilesJson), &mediaFiles)
+	if err != nil {
+		fmt.Printf("解码JSON失败：%s\n", err)
+		return xuetang.MediaFiles{}, err
+	}
+	return *mediaFiles, nil
 }

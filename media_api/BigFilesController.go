@@ -12,37 +12,20 @@ import (
 	"xuetang/media_service"
 )
 
-// ListMediaFiles 查询媒资列表的接口处理函数
-func ListMediaFiles(c *gin.Context) {
-	No := c.Query("pageNo")
-	Size := c.Query("pageSize")
-	pageNo, _ := strconv.ParseInt(No, 10, 64)
-	pageSize, _ := strconv.ParseInt(Size, 10, 64)
-
-	// 从请求中获取页码和查询参数
-	pageParams := xuetang.NewPageParams()
-	pageParams.SetPageNo(pageNo)
-	pageParams.SetPageSize(pageSize)
-	if err := c.Bind(&pageParams); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	// 假设公司 ID 为 1232141425L
-	companyId := 1232141425
-
-	// 调用服务层查询媒资文件
-	result, err := media_service.QueryMediaFiles(companyId, *pageParams)
+// CheckFile 检查文件是否存在
+func CheckFile(c *gin.Context) {
+	fileMd5 := c.Query("fileMd5")
+	res, err := media_service.CheckFile(fileMd5)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, media_model.ValidFail("找不到视频"))
 		return
 	}
 
-	// 返回结果
-	c.JSON(http.StatusOK, result)
+	c.JSON(http.StatusOK, res)
 }
 
-// UploadMediaFiles 上传媒资文件的接口处理函数
-func UploadMediaFiles(c *gin.Context) {
+// UploadBigFile 分片上传大文件
+func UploadBigFile(c *gin.Context) {
 	file, err := c.FormFile("data")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -73,6 +56,8 @@ func UploadMediaFiles(c *gin.Context) {
 	// 获取临时文件路径
 	filePath := tempFile.Name()
 
+	fmt.Println(filePath)
+
 	//准备上传信息
 	uploadFileParam := xuetang.NewUploadFileParamsDto()
 	uploadFileParam.SetFilename(file.Filename)
@@ -83,7 +68,7 @@ func UploadMediaFiles(c *gin.Context) {
 	companyId := 1232141425
 
 	// 调用服务层上传媒资文件
-	result, err := media_service.UploadMedia(companyId, *uploadFileParam, filePath)
+	result, err := media_service.UploadBigFile(companyId, *uploadFileParam, filePath)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -93,19 +78,19 @@ func UploadMediaFiles(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-func GetPlayUrlByMediaId(c *gin.Context) {
-	mediaId := c.Query("mediaId")
-	mediaFiles, err := media_service.GetPlayUrlById(mediaId)
+// UploadProcessResult 获取上传进度
+func UploadProcessResult(c *gin.Context) {
+	filepath := c.Query("filepath")
+	Size := c.Query("fileSize")
+	fileSize, err := strconv.ParseFloat(Size, 64)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, media_model.ValidFail("找不到视频"))
-		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	url := mediaFiles.GetUrl()
-	if url == "" {
-		c.JSON(http.StatusOK, media_model.ValidFail("视频正在处理中"))
+	res, err := media_service.GetUploadProcess(filepath, fileSize)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, media_model.Success(url))
+	c.JSON(http.StatusOK, res)
 }

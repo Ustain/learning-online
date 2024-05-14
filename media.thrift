@@ -44,11 +44,34 @@ struct UploadFileParamsDto{
     6: required string remark   // 备注
 }
 
+// 媒资预览Response
+struct RestResponse{
+    1: required i64 code = 0 //响应编码，0为正常，-1错误
+    2: optional string msg = "success"  //响应提示信息
+    3: optional string result  //响应内容
+}
+
+
 struct UploadFileResultDto {
-    1: MediaFiles mediaFiles
+    1: required MediaFiles mediaFiles
 }
 
 service Media{
      PageResult QueryMediaFiles(1:PageParams req)
-     UploadFileResultDto UploadMediaFiles(1:UploadFileParamsDto req, 2: string filePath)
+     UploadFileResultDto UploadMediaFiles(1:UploadFileParamsDto req, 2:string filePath)
+     RestResponse getPlayUrlByMediaId(1:string mediaId)
 }
+
+struct UploadProcessResult{
+    1: required string filepath
+    2: required double process
+}
+
+
+service BigFile{
+      RestResponse checkfile(1:string fileMd5)
+      UploadFileResultDto UploadBigFile(1:UploadFileParamsDto req, 2:string filePath)
+      UploadProcessResult GetUploadProcess(1:string filepath, 2:double fileSize)
+}
+
+

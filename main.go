@@ -10,10 +10,15 @@ func main() {
 	go init_config.InitDb()
 	//初始化Redis
 	go init_config.InitRd()
+	//初始化七牛云存储
+	go init_config.Initqiniu()
 	//初始化Nacos
 	init_config.Initnacos()
 	//注册服务到Nacos
 	go Regis(init_config.NacosCli)
+
+	//媒资数据预热
+	go init_config.Preheat()
 
 	// 创建一个默认的gin.Engine实例，用于构建HTTP路由。
 	r := gin.Default()
