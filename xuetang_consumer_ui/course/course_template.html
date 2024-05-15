@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/img/fanicon.png">
+    <title>智慧学堂</title>
+
+    <link rel="stylesheet" href="/static/plugins/normalize-css/normalize.css" />
+    <link rel="stylesheet" href="/static/plugins/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/static/css/page-learing-article.css" />
+</head>
+
+<body data-spy="scroll" data-target="#articleNavbar" data-offset="150">
+<!-- 页面头部 -->
+<!--#include virtual="/include/header.html"-->
+<!--页面头部结束sss-->
+<div id="learningArea">
+    <div class="article-banner">
+        <div class="banner-bg">
+            <img src="/static/img/course2tt.png" width="100%" height="100%" alt="">
+        </div>
+        <div class="banner-info">
+            <div class="banner-left">
+                <p>课程 <span>\ 高等数学</span></p>
+                <p class="tit">武忠祥-高等数学（上）-0基础课</p>
+                <p class="pic"><span class="new-pic">特惠价格￥99</span> <span class="old-pic">原价￥199</span></p>
+                <p class="info">
+                    <a href="#" @click.prevent="startLearning()">马上学习</a>
+                    <span><em>难度等级</em>中级</span>
+                    <span><em>课程时长</em>26小时</span>
+                    <span><em>评分</em>4.8分</span>
+                    <span><em>授课模式</em>视频</span>
+                </p>
+            </div>
+            <div class="banner-rit">
+                <p>
+                  <a href="http://www.51xuecheng.cn/course/preview/learning.html?id=82" target="_blank">
+                  <img src="/static/img/widget-video.png" alt="">
+                  </a>
+                </p>
+                <p class="vid-act"><span> <i class="i-heart"></i>收藏 23 </span> <span>分享 <i class="i-weixin"></i><i class="i-qq"></i></span></p>
+            </div>
+        </div>
+    </div>
+    <div class="article-cont">
+        <div class="tit-list">
+            <a href="javascript:;" id="articleClass" class="active">课程介绍</a>
+            <a href="javascript:;" id="articleItem">目录</a>
+            <a href="javascript:;" id="artcleAsk">问答</a>
+            <a href="javascript:;" id="artcleNot">笔记</a>
+            <a href="javascript:;" id="artcleCod">评价</a>
+            <!--<div class="down-fill">
+                <span>资料下载</span>
+                <ul>
+                    <li>java视频资料</li>
+                    <li>java视频资料</li>
+                    <li>java视频资料</li>
+                </ul>
+            </div>-->
+        </div>
+        <div class="article-box">
+            <div class="articleClass" style="display: block">
+                <!--<div class="rit-title">评价</div>-->
+                <div class="article-cont">
+                    <div class="article-left-box">
+                        <div class="content">
+
+                            <div class="content-com suit">
+                                <div class="title"><span>适用人群</span></div>
+                                <div class="cont cktop">
+                                    <div >
+                                        <p>本课程教学安排合理，内容讲解清晰易懂，知识点梳理有条理。100%适合基础薄弱型考生。</p>
+                                    </div>
+                                    <!--<span class="on-off">更多 <i class="i-chevron-bot"></i></span>-->
+                                </div>
+                            </div>
+                            <div class="content-com course">
+                                <div class="title"><span>课程制作</span></div>
+                                <div class="cont">
+                                    <div class="img-box"><img src="/static/img/widget-teacher5.jpg" width="100%" alt=""></div>
+                                    <div class="info-box">
+                                        <p class="name">教学方：<em>武忠祥老师</em></p>
+                                       <!-- <p class="lab">高级前端开发工程师 10年开发经验</p>-->
+                                        <p class="info">原西安交通大学理学院副院长、数学系教授。高教版工科教材《高等数学基础》编写者，编著考研辅导书共计16本。从事高等数学教学和考研辅导30年，对学生在高数上存在的弱点了如指掌。</p>
+                                       <!-- <p><span>难度等级</span>中级</p>
+                                        <p><span>课程时长</span>8-16小时/周，共4周</p>
+                                        <p><span>如何通过</span>通过所有的作业及考核，作业共4份，考核为一次终极考核</p>
+                                        <p><span>用户评分</span>平均用户评分 <em>4.9</em> <a href="#">查看全部评价</a></p>
+                                        <p><span>课程价格</span>特惠价格<em>￥999</em> <i> 原价1999 </i></p>-->
+                                    </div>
+                                </div>
+
+                            </div>
+                          <div class="content-com about">
+                            <div class="title"><span>课程介绍</span></div>
+                            <div class="cont cktop">
+                              <div >
+                                <p>以微积分为核心的高等数学是打开一切科学大门的金钥匙。通过本课程的学习，旨在培养学生的抽象思维能力、逻辑推理能力以及综合运用所学知识去分析和解决实际问题的能力；为学生今后学习各类后继课程和进一步扩大数学知识面奠定必要的数学基础。教学安排合理，内容讲解清晰易懂，知识点梳理富有条例逻辑， 100%适合基础薄弱型考生。结合考纲及考生缺陷设计，从真题入手浓缩高数精华部分，干货密度大。注意培养考生的基础数学思维和求知心理在抛出知识重难点后，强调双向思考的过程，而非单向度的知识。讲解深入浅出，课程在指示所有“经典错误”的基础上，还在传授多种解题方法思路，实现按“秒”解题</p>
+                              </div>
+                              <!--<span class="on-off">更多 <i class="i-chevron-bot"></i></span>-->
+                            </div>
+                          </div>
+                            <div class="content-com prob">
+                                <div class="title"><span>常见问题</span></div>
+                                <div class="cont">
+                                    <ul>
+                                        <li class="item"><span class="on-off"><i class="i-chevron-bot"></i> 我什么时候能够访问课程视频与作业？</span>
+                                            <div class="drop-down">
+                                                <p>课程安排灵活，课程费用支付提供180天全程准入和资格证书。自定进度课程建议的最后期限，但你不会受到惩罚错过期限，只要你赚你的证书在180天内。以会话为基础的课程可能要求你在截止日期前保持正轨，但如果你落后了，你可以切换到以后的会议，你完成的任何工作将与你转移。</p>
+                                            </div>
+                                        </li>
+                                        <li class="item"><span class="on-off"><i class="i-chevron-bot"></i> 如何需要额外的时间来完成课程会怎么样？</span>
+                                            <div class="drop-down">
+                                                <p>课程安排灵活，课程费用支付提供180天全程准入和资格证书。自定进度课程建议的最后期限，但你不会受到惩罚错过期限，只要你赚你的证书在180天内。以会话为基础的课程可能要求你在截止日期前保持正轨，但如果你落后了，你可以切换到以后的会议，你完成的任何工作将与你转移。</p>
+                                            </div>
+                                        </li>
+                                        <li class="item"><span class="on-off"><i class="i-chevron-bot"></i> 我支付次课程之后会得到什么？</span>
+                                            <div class="drop-down">
+                                                <p>课程安排灵活，课程费用支付提供180天全程准入和资格证书。自定进度课程建议的最后期限，但你不会受到惩罚错过期限，只要你赚你的证书在180天内。以会话为基础的课程可能要求你在截止日期前保持正轨，但如果你落后了，你可以切换到以后的会议，你完成的任何工作将与你转移。</p>
+                                            </div>
+                                        </li>
+                                        <li class="item"><span class="on-off"><i class="i-chevron-bot"></i> 退款条例是如何规定的？</span>
+                                            <div class="drop-down">
+                                                <p>课程安排灵活，课程费用支付提供180天全程准入和资格证书。自定进度课程建议的最后期限，但你不会受到惩罚错过期限，只要你赚你的证书在180天内。以会话为基础的课程可能要求你在截止日期前保持正轨，但如果你落后了，你可以切换到以后的会议，你完成的任何工作将与你转移。</p>
+                                            </div>
+                                        </li>
+                                        <li class="item"><span class="on-off"><i class="i-chevron-bot"></i> 有助学金？</span>
+                                            <div class="drop-down">
+                                                <p>课程安排灵活，课程费用支付提供180天全程准入和资格证书。自定进度课程建议的最后期限，但你不会受到惩罚错过期限，只要你赚你的证书在180天内。以会话为基础的课程可能要求你在截止日期前保持正轨，但如果你落后了，你可以切换到以后的会议，你完成的任何工作将与你转移。</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  <!--侧边栏-->
+                  <!--#include virtual="/include/course_detail_side.html"-->
+                  <!--侧边栏-->
+
+                </div>
+            </div>
+            <div class="articleItem" style="display: none">
+                <div class="article-cont-catalog">
+                    <div class="article-left-box">
+                        <div class="content">
+                            <div class="item">
+                                <div class="title act"><i class="i-chevron-top"></i>第一章 函数与极限<span class="time">8小时</span></div>
+                                <div class="about">函数与极限。</div>
+                                <div class="drop-down" style="height: 260px;">
+                                    <ul class="list-box">
+                                        <li class="active"><a href="http://www.51xuecheng.cn/course/preview/learning.html?id=82&chapter=149" target=_blank>1.1 映射与函数</a> <span>97’33”</span></li>
+                                        <li>1.2 数列的极限 <span>66’15”</span></li>
+                                        <li>1.3 函数的极限 <span>86’42”</span></li>
+                                        <li>1.4 无穷小与无穷大 <span>59’00”</span></li>
+                                        <li>1.5 极限运算法则 <span>93’29”</span></li>
+                                        <li>阶段测试</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="title"><i class="i-chevron-bot"></i>第二章 导数与微分<span class="time">8小时</span></div>
+                                <div class="about">导数与微分。</div>
+                                <div class="drop-down">
+                                    <ul class="list-box">
+                                        <li class="active">1.1 导数概念 <span>97’33”</span></li>
+                                        <li>1.2 函数的求导法则 <span>66’15”</span></li>
+                                        <li>1.3 高阶导数 <span>86’42”</span></li>
+                                        <li>1.4 隐函数 <span>59’00”</span></li>
+                                        <li>1.5 函数的微分 <span>93’29”</span></li>
+                                        <li>阶段测试</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="title"><i class="i-chevron-bot"></i>第三章 微分中值定理与导数的应用<span class="time">3小时</span></div>
+                                <div class="about">微分中值定理与导数的应用。</div>
+                                <div class="drop-down">
+                                    <ul class="list-box">
+                                        <li class="active">1.1 微分中值定理 <span>97’33”</span></li>
+                                        <li>1.2 洛必达法则 <span>66’15”</span></li>
+                                        <li>1.3 泰勒公式 <span>86’42”</span></li>
+                                        <li>1.4 函数的单调性与曲线的凹凸性 <span>59’00”</span></li>
+                                        <li>1.5 函数的极值与最大值最小值 <span>93’29”</span></li>
+                                        <li>阶段测试</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="title"><i class="i-chevron-bot"></i>第四章 不定积分<span class="time">3小时</span></div>
+                                <div class="about">不定积分。</div>
+                                <div class="drop-down">
+                                    <ul class="list-box">
+                                        <li class="active">1.1 不定积分的概念与性质 <span>97’33”</span></li>
+                                        <li>1.2 换元积分法 <span>66’15”</span></li>
+                                        <li>1.3 分部积分法 <span>86’42”</span></li>
+                                        <li>1.4 有理函数的积分 <span>59’00”</span></li>                                       
+                                        <li>阶段测试</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="title"><i class="i-chevron-bot"></i>第五章 定积分<span class="time">3小时</span></div>
+                                <div class="about">定积分。</div>
+                                <div class="drop-down">
+                                    <ul class="list-box">
+                                        <li class="active">1.1 定积分的性质与概念 <span>97’33”</span></li>
+                                        <li>1.2 微积分基本公式 <span>66’15”</span></li>
+                                        <li>1.3 定积分的换元积分法和分部积分法 <span>86’42”</span></li>
+                                        <li>1.4 反常积分 <span>59’00”</span></li>
+                                        <li>1.5 反常积分的审敛法 <span>93’29”</span></li>
+                                        <li>阶段测试</li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div class="item">
+                                <a href="#" class="overwrite">毕业考核</a>
+                            </div>
+                        </div>
+                    </div>
+                  <!--侧边栏-->
+                  <!--#include virtual="/include/course_detail_side.html"-->
+                  <!--侧边栏-->
+                </div>
+            </div>
+            <div class="artcleAsk" style="display: none">
+                <div class="article-cont-ask">
+                    <div class="article-left-box">
+                        <div class="content">
+                            <div class="content-title">
+                                <p><a class="all">全部</a><a>精选</a><a>我的</a></p>
+                                <p><a class="all">全部</a><span><a>1.1</a><a>1.2</a><a>1.3</a><a>1.4</a><a>1.5</a></span><a href="$" class="more">更多 <i class="i-chevron-bot"></i></a></p>
+                            </div>
+                            <div class="item">
+                                <div class="item-left">
+                                    <p><img src="/static/img/widget-teacher5.jpg" width="60px" alt=""></p>
+                                    <p>武忠祥老师</p>
+                                </div>
+                                <div class="item-right">
+                                    <p class="title">试证明微分中值定理</p>
+                                    <p><span>我来回答</span></p>
+                                    <p>2017-3-20 <span><i></i>回答2</span><span><i></i>浏览2</span></p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-left">
+                                    <p><img src="/static/img/widget-teacher5.jpg" width="60px" alt=""></p>
+                                    <p>武忠祥老师</p>
+                                </div>
+                                <div class="item-right">
+                                    <p class="title">试证明微分中值定理</p>
+                                    <p>用罗尔定理证明等式的常用方法:将欲证等式写成等号一端只有零, 再构造辅助函数. 其步骤为:(1) 将 f(E)=0改写为f(x)=0 ;(2) 依据f(x) 构造辅助函数F(x) : 【最新 <i class="new">心跳347890</i> 的回答】</p>
+                                    <p>2017-3-20 <span class="action-box"><span><i class="i-answer"></i>回答 2</span><span><i class="i-browse"></i>浏览 12</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-left">
+                                    <p><img src="/static/img/widget-teacher5.jpg" width="60px" alt=""></p>
+                                    <p>武忠祥老师</p>
+                                </div>
+                                <div class="item-right">
+                                    <p class="title">试证明微分中值定理</p>
+                                    <p>用罗尔定理证明等式的常用方法:将欲证等式写成等号一端只有零, 再构造辅助函数. 其步骤为:(1) 将 f(E)=0改写为f(x)=0 ;(2) 依据f(x) 构造辅助函数F(x) : 【最新 <i class="new">心跳347890</i> 的回答】</p>
+                                    <p>2017-3-20 <span class="action-box"><span><i class="i-answer"></i>回答 2</span><span><i class="i-browse"></i>浏览 12</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-left">
+                                    <p><img src="/static/img/widget-teacher5.jpg" width="60px" alt=""></p>
+                                    <p>武忠祥老师</p>
+                                </div>
+                                <div class="item-right">
+                                   <p class="title">试证明微分中值定理</p>
+                                    <p>用罗尔定理证明等式的常用方法:将欲证等式写成等号一端只有零, 再构造辅助函数. 其步骤为:(1) 将 f(E)=0改写为f(x)=0 ;(2) 依据f(x) 构造辅助函数F(x) : 【最新 <i class="new">心跳347890</i> 的回答】</p>
+                                    <p>2017-3-20 <span class="action-box"><span><i class="i-answer"></i>回答 2</span><span><i class="i-browse"></i>浏览 12</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-left">
+                                    <p><img src="/static/img/widget-teacher5.jpg" width="60px" alt=""></p>
+                                    <p>武忠祥老师</p>
+                                </div>
+                                <div class="item-right">
+                                    <p class="title">试证明微分中值定理</p>
+                                    <p>用罗尔定理证明等式的常用方法:将欲证等式写成等号一端只有零, 再构造辅助函数. 其步骤为:(1) 将 f(E)=0改写为f(x)=0 ;(2) 依据f(x) 构造辅助函数F(x) : 【最新 <i class="new">心跳347890</i> 的回答】</p>
+                                    <p>2017-3-20 <span class="action-box"><span><i class="i-answer"></i>回答 2</span><span><i class="i-browse"></i>浏览 12</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-left">
+                                    <p><img src="/static/img/widget-teacher5.jpg" width="60px" alt=""></p>
+                                    <p>武忠祥老师</p>
+                                </div>
+                                <div class="item-right">
+                                   <p class="title">试证明微分中值定理</p>
+                                    <p>用罗尔定理证明等式的常用方法:将欲证等式写成等号一端只有零, 再构造辅助函数. 其步骤为:(1) 将 f(E)=0改写为f(x)=0 ;(2) 依据f(x) 构造辅助函数F(x) : 【最新 <i class="new">心跳347890</i> 的回答】</p>
+                                    <p>2017-3-20 <span class="action-box"><span><i class="i-answer"></i>回答 2</span><span><i class="i-browse"></i>浏览 12</span></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="itemlast">
+                                <a href="#" class="overwrite">显示更多问题</a>
+                            </div>
+                        </div>
+                    </div>
+                  <!--侧边栏-->
+                  <!--#include virtual="/include/course_detail_side.html"-->
+                  <!--侧边栏-->
+                </div>
+            </div>
+            <div class="artcleNot" style="display: none;">
+                <div class="article-cont-note">
+                    <div class="article-left-box">
+                        <div class="content">
+                            <div class="content-title">
+                                <p><a class="all">全部</a><a>精选</a><a>我的</a></p>
+                                <p><a class="all">全部</a><span><a>1.1</a><a>1.2</a><a>1.3</a><a>1.4</a><a>1.5</a></span><a href="$" class="more">更多 <i class="i-chevron-bot"></i></a></p>
+                            </div>
+                            <div class="item">
+                                <div class="item-left">
+                                    <p><img src="/static/img/widget-teacher5.jpg" width="60px" alt=""></p>
+                                    <p>武忠祥老师</p>
+                                </div>
+                                <div class="item-right">
+                                    <span class="video-time"><i class="i-play"></i>2`10`</span>
+                                    <p><img src="/static/img/widget-demo.png" width="221" alt=""></p>
+                                    <p class="action-box">4小时前 <span class="active-box"><span><i class="i-coll"></i>采集</span><span><i class="i-laud"></i>赞</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-left">
+                                    <p><img src="/static/img/widget-teacher5.jpg" width="60px" alt=""></p>
+                                    <p>武忠祥老师</p>
+                                </div>
+                                <div class="item-right">
+                                    <p>这类问题要注意不要忽视题目所给的初值条件<br>保留微分方程解的常数部分，能确定的要确定，才能构造出正确的函数.<br>利用微分方程法的原理，不难推出如下的构造公式： </p>
+                                    <p class="action-box">4小时前 <span class="active-box"><span><i class="i-edt"></i>编辑</span><span><i class="i-del"></i>删除</span><span><i class="i-laud"></i>赞</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-left">
+                                    <p><img src="/static/img/widget-teacher5.jpg" width="60px" alt=""></p>
+                                    <p>武忠祥老师</p>
+                                </div>
+                                <div class="item-right">
+                                     <p>这类问题要注意不要忽视题目所给的初值条件<br>保留微分方程解的常数部分，能确定的要确定，才能构造出正确的函数.<br>利用微分方程法的原理，不难推出如下的构造公式： </p>
+                                    <p class="action-box">4小时前 <span class="active-box"><span><i class="i-edt"></i>编辑</span><span><i class="i-del"></i>删除</span><span><i class="i-laud"></i>赞</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item-left">
+                                    <p><img src="/static/img/widget-teacher5.jpg" width="60px" alt=""></p>
+                                    <p>武忠祥老师</p>
+                                </div>
+                                <div class="item-right">
+                                    <p>这类问题要注意不要忽视题目所给的初值条件<br>保留微分方程解的常数部分，能确定的要确定，才能构造出正确的函数.<br>利用微分方程法的原理，不难推出如下的构造公式： </p>
+                                    <p class="action-box">4小时前 <span class="active-box"><span><i class="i-edt"></i>编辑</span><span><i class="i-del"></i>删除</span><span><i class="i-laud"></i>赞</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  <!--侧边栏-->
+                  <!--#include virtual="/include/course_detail_side.html"-->
+                  <!--侧边栏-->
+                </div>
+            </div>
+            <div class="artcleCod" style="display: none;">
+                <div class="article-cont">
+                    <div class="article-left-box">
+                        <div class="comment-box">
+                            <div class="evaluate">
+                                <div class="eva-top">
+                                    <div class="tit">课程评分 </div>
+                                    <div class="star">
+                                        <div class="score"><i>5</i></div>
+                                    </div><span class="star-score"> <i>5</i> 分</span></div>
+                                <div class="eva-cont">
+                                    <div class="tit">学员评语 </div>
+                                    <div class="text-box">
+                                        <textarea class="form-control" rows="5" placeholder="扯淡、吐槽、表扬、鼓励......想说啥说啥！"></textarea>
+                                        <div class="text-right"><span>发表评论</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="course-evaluate">
+                                <div class="top-tit">评论
+                                    <span>
+                        <label><input name="eval" type="radio" value="" checked /> 所有学生 </label>
+                        <label><input name="eval" type="radio" value="" /> 完成者 </label>
+                    </span>
+                                </div>
+                                <div class="top-cont">
+                                    <div class="cont-top-left">
+                                        <div class="star-scor">
+                                            <div class="star-show">
+                                                <div class="score"><i>5</i></div>
+                                            </div>
+                                            <div class="scor">4.8分</div>
+                                        </div>
+                                        <div class="all-scor">总评分：12343</div>
+                                    </div>
+                                    <div class="cont-top-right">
+                                        <div class="star-grade">五星
+                                            <div class="grade">
+                                                <div class="grade-percent"><span></span></div>
+                                                <div class="percent-num"><i>95</i>%</div>
+                                            </div>
+                                        </div>
+                                        <div class="star-grade">四星
+                                            <div class="grade">
+                                                <div class="grade-percent"><span></span></div>
+                                                <div class="percent-num"><i>5</i>%</div>
+                                            </div>
+                                        </div>
+                                        <div class="star-grade">三星
+                                            <div class="grade">
+                                                <div class="grade-percent"><span></span></div>
+                                                <div class="percent-num"><i>0</i>%</div>
+                                            </div>
+                                        </div>
+                                        <div class="star-grade">二星
+                                            <div class="grade">
+                                                <div class="grade-percent"><span></span></div>
+                                                <div class="percent-num"><i>2</i>%</div>
+                                            </div>
+                                        </div>
+                                        <div class="star-grade">一星
+                                            <div class="grade">
+                                                <div class="grade-percent"><span></span></div>
+                                                <div class="percent-num"><i>1</i>%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment-item-box">
+                                    <div class="title">评论 <span>12453条评论</span></div>
+                                    <div class="item">
+                                        <div class="item-left">
+                                            <p><img src="/static/img/head.jpg" width="60px" alt=""></p>
+                                            <p>w同学</p>
+                                        </div>
+                                        <div class="item-cent">
+                                            <p>很喜欢武老师的讲课，清晰有逻辑，简单不废话</p>
+                                            <p class="time">2017-2-43</p>
+                                        </div>
+                                        <div class="item-rit">
+                                            <p>
+                                                <div class="star-show">
+                                                    <div class="score"><i>4</i></div>
+                                                </div>
+                                            </p>
+                                            <p>评分 <span>5星</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="item-left">
+                                            <p><img src="/static/img/head.jpg" width="60px" alt=""></p>
+                                            <p>x同学</p>
+                                        </div>
+                                        <div class="item-cent">
+                                            <p>很喜欢武老师的讲课，清晰有逻辑，简单不废话</p>
+                                            <p class="time">2017-2-43</p>
+                                        </div>
+                                        <div class="item-rit">
+                                            <p>
+                                                <div class="star-show">
+                                                    <div class="score"><i>5</i></div>
+                                                </div>
+                                            </p>
+                                            <p>评分 <span>5星</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="item-left">
+                                            <p><img src="/static/img/head.jpg" width="60px" alt=""></p>
+                                            <p>张同学</p>
+                                        </div>
+                                        <div class="item-cent">
+                                            <p>很喜欢武老师的讲课，清晰有逻辑，简单不废话</p>
+                                            <p class="time">2017-2-43</p>
+                                        </div>
+                                        <div class="item-rit">
+                                            <p>
+                                                <div class="star-show">
+                                                    <div class="score"><i>5</i></div>
+                                                </div>
+                                            </p>
+                                            <p>评分 <span>5星</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="item-left">
+                                            <p><img src="/static/img/head.jpg" width="60px" alt=""></p>
+                                            <p>李同学</p>
+                                        </div>
+                                        <div class="item-cent">
+                                            <p>很喜欢武老师的讲课，清晰有逻辑，简单不废话</p>
+                                            <p class="time">2017-2-43</p>
+                                        </div>
+                                        <div class="item-rit">
+                                            <p>
+                                                <div class="star-show">
+                                                    <div class="score"><i>5</i></div>
+                                                </div>
+                                            </p>
+                                            <p>评分 <span>5星</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="get-more">页面加载中...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  <!--侧边栏-->
+                  <!--#include virtual="/include/course_detail_side.html"-->
+                  <!--侧边栏-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-course">
+        <div class="mask"></div>
+        <!--欢迎访问课程弹窗- start -->
+        <div class="popup-course-box">
+            <div class="title">J武忠祥-高等数学（上）-0基础课 <span class="close-popup-course-box">×</span></div>
+            <div class="content">
+                <p>欢迎学习本课程，本课程免费您可以立即学习，也可加入我的课程表享受更优质的服务。</p>
+                <p><a href="#" @click.prevent="addCourseTable()">加入我的课程表</a>  <a href="#" @click.prevent="startLearngin()">立即学习</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="popup-box">
+        <div class="mask"></div>
+        <!--支付弹窗- start -->
+        <div class="popup-pay-box">
+            <div class="title">武忠祥-高等数学（上）-0基础课 <span class="close-popup-pay-box">×</span></div>
+            <div class="content">
+                <img :src="qrcode" width="200" height="200" alt="请点击支付宝支付按钮，并完成扫码支付。"/>
+               
+                <div class="info">
+                    <p class="info-tit">武忠祥-高等数学（上）-0基础课 <span>课程有效期:365天</span></p>
+                    <p class="info-pic">课程价格 : <span>￥199</span></p>
+                    <p class="info-new-pic">优惠价格 : <span>￥99</span></p>
+                </div>
+            </div>
+            <div class="fact-pic">
+                实际支付: <span>￥99</span></div>
+            <div class="go-pay"><a href="#" @click.prevent="wxPay()">微信支付</a><a href="#" @click.prevent="aliPay()">支付宝支付</a><a href="#" @click.prevent="startLearngin()">试学</a></div>
+        </div>
+        <!--支付弹窗- end -->
+        <div class="popup-comment-box">
+    
+        </div>
+    </div>
+    <!-- 页面底部 -->
+<!--底部版权-->
+<!--#include virtual="/include/footer.html"-->
+<!--底部版权-->
+</div>
+<script>var courseId = "2";var courseCharge = "201001"</script>
+<!--#include virtual="/include/course_detail_dynamic.html"-->
+</body>
